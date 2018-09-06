@@ -12,8 +12,6 @@ class EmpregadoCeopc extends Empregado
     // DEFINIÇÃO DOS ATRIBUTOS
     private $celula;
     private $nivelAcesso;
-    private $periodoAquisitivoVigente;
-    private $saldo;
     private $agenteRH;
 
     // $celula
@@ -34,26 +32,6 @@ class EmpregadoCeopc extends Empregado
     public function setNivelAcesso($nivelAcesso)
     {
         $this->nivelAcesso = $nivelAcesso;
-    }
-
-    // $periodoAquisitivoVigente
-    public function getPeriodoAquisitivoVigente()
-    {
-        return $this->periodoAquisitivoVigente;
-    }
-    public function setPeriodoAquisitivoVigente($periodoAquisitivoVigente)
-    {
-        $this->periodoAquisitivoVigente = $periodoAquisitivoVigente;
-    }
-
-    // $saldo
-    public function getSaldo()
-    {
-        return $this->saldo;
-    }
-    public function setSaldo($saldo)
-    {
-        $this->saldo = $saldo;
     }
 
     // $agenteRH
