@@ -81,11 +81,11 @@ class Ferias extends Ausencia
     }
 
     // construct
-    public function _construct($objEmpregadoCeopc)
+    public function __construct($objEmpregadoCeopc)
     {
         $sql = new Sql();
 
-        $feriasDisponiveis = $sql->query("SELECT TOP 1
+        $feriasDisponiveis = $sql->select("SELECT TOP 1
                                             'SALDO_DIAS' = [SALDO_DIAS] - [DIAS_UTILIZADOS] - [DIAS_VENDIDOS]
                                             ,[DATA_INICIO_PERIODO_AQUISITIVO]
                                             ,[ID_PERIODO]
@@ -96,7 +96,7 @@ class Ferias extends Ausencia
                                              [MATRICULA] = :MATRICULA
                                         ORDER BY
                                             [DATA_INICIO_PERIODO_AQUISITIVO] ASC", array(
-                                                ":MATRICULA"=>$objEmpregadoCeopc->getMatricula()
+                                                ':MATRICULA'=>$objEmpregadoCeopc->getMatricula(),
                                             ));
         if(!empty($feriasDisponiveis))
         {
@@ -106,11 +106,8 @@ class Ferias extends Ausencia
             $this->setSaldo($row['SALDO_DIAS']);
             $this->setPeriodoAquisitivo($row['DATA_INICIO_PERIODO_AQUISITIVO']);
             $this->setIdPeriodoFerias($row['ID_PERIODO']);
-        }
-
-        
+        }        
     }
-    
 }
 
 ?>

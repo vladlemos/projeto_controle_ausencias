@@ -12,7 +12,19 @@
 	require('config_classes_globais.php');
 	require('controle_ausencia' . DIRECTORY_SEPARATOR . 'config_controle_ausencia.php');
 
-	$ferias = new Ferias();
+	$usuario = new EmpregadoCeopc();
+
+	echo $usuario;
+
+	echo "<hr/>";
+
+	echo $usuario->getMatricula();
+
+	echo "<hr/>";
+
+	$ferias = new Ferias($usuario);
+
+	var_dump($ferias);
 
 
 

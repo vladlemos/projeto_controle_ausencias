@@ -9,13 +9,16 @@ spl_autoload_register(function($className){
 	// $fileName = "class". DIRECTORY_SEPARATOR . $className . ".php";
 	// CAMINHO FIXO
 	$caminho = $_SERVER["DOCUMENT_ROOT"];
-	echo $caminho;
+
+	//CAMINHO PARA O CONTROLE_AUSENCIA NA PASTA CHUMAN
+	$fileName = $caminho  . DIRECTORY_SEPARATOR . "chuman" . DIRECTORY_SEPARATOR . "projetoFerias" . DIRECTORY_SEPARATOR . "class" . DIRECTORY_SEPARATOR . $className . ".php";
+	
 	// $fileName = $caminho . DIRECTORY_SEPARATOR . "class". DIRECTORY_SEPARATOR . $className . ".php";
 
-	// if(file_exists($fileName)) {
+	if(file_exists($fileName)) {
 
-	// 	require_once($fileName);
+		require_once($fileName);
 
-	// }
+	}
 
 });
