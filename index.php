@@ -3,31 +3,61 @@
 <head>
 	<meta charset="utf-8">
 	<title>Home</title>
+	<link rel="stylesheet" href="plugins/jquery-ui-1.12.1.custom/jquery-ui.css">
+	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script>
+		$( function() {
+			$( "#datePickerDataInicio" ).datepicker({ dateFormat: 'dd/mm/yy', minDate: 0, maxDate: "+6M" }).val();
+			$( "#datePickerDataRetorno" ).datepicker({ dateFormat: 'dd/mm/yy', minDate: 0, maxDate: "+7M" }).val();
+		} );
+	</script>
 </head>
 <body>
 	<?php	
-	// VERIFICA SE EXISTEM ERROS DE EXECUÇÃO NO CÓDIGO
-	ini_set('display_errors',1);
-	// CHAMA OS ARQUIVOS DE VERIFICAÇÃO DE EXISTÊNCIA DAS CLASSES
-	require('config_classes_globais.php');
-	require('controle_ausencia' . DIRECTORY_SEPARATOR . 'config_controle_ausencia.php');
+		// VERIFICA SE EXISTEM ERROS DE EXECUÇÃO NO CÓDIGO
+		ini_set('display_errors',1);
+		// CHAMA OS ARQUIVOS DE VERIFICAÇÃO DE EXISTÊNCIA DAS CLASSES
+		require('config_classes_globais.php');
+		require('controle_ausencia' . DIRECTORY_SEPARATOR . 'config_controle_ausencia.php');
 
-	$usuario = new EmpregadoCeopc();
+		$usuario = new EmpregadoCeopc();
 
-	echo $usuario;
+		// echo "Dados do Empregado CEOPC (Classe Empregado + dados de célula, nível acesso e agente de RH: <br><br>";
+		// echo $usuario;
 
-	echo "<hr/>";
+		// echo "<hr/>";
 
-	echo $usuario->getMatricula();
+		$ferias = new Ferias($usuario);
 
-	echo "<hr/>";
+		// echo "Construct da classe Férias: <br><br>";
+		// var_dump($ferias);
 
-	$ferias = new Ferias($usuario);
-
-	var_dump($ferias);
-
-
-
+		// echo "<hr/>";
 	?>
+	<form action="" method="get">
+		<fieldset><legend>DADOS EMPREGADO</legend>
+			<label>MATRICULA: <input type="text" name="matricula" value="<?= $usuario->getMatricula(); ?>" size="5" readonly>
+			- <input type="text" name="dv" value="<?= $usuario->getDv(); ?>" size="1" readonly></label>
+			<label>NOME: <input type="text" name="nome" value="<?= $usuario->getNome(); ?>" size="40" readonly></label>
+			<label>CELULA: <input type="text" name="celula" value="<?= $usuario->getCelula(); ?>" size="37" readonly><br></label>
+		</fieldset>
+		<fieldset><legend>SOLICITAR AUSÊNCIA</legend>
+			<label>PERIODO AQUISITIVO: <input type="text" name="periodoAquisitivo" value="<?= date("d/m/Y", strtotime($ferias->getPeriodoAquisitivo())); ?>" size="10" readonly></label>
+			<label>DIAS DISPONÍVEIS: <input type="text" name="saldoDisponivel" value="<?= $ferias->getSaldo(); ?>" size="2" readonly><br></label>
+			<label>DATA INICIO: <input type="text" id="datePickerDataInicio" name="dataInicio"></label>
+			<label>DATA RETORNO: <input type="text" id="datePickerDataRetorno" name="dataRetorno"><br></label>
+			<label>ABONO PECUNIÁRIO: 
+				<select name="abonoPecuniario">
+					<option value="0">NÃO</option>
+					<option value="1">SIM</option>
+				</select>
+			</label>
+			<label>QUANTIDADE DIAS ABONO: <input type="number" name="quantidadeDiasAbono" min="0"><br></label>
+			<label>QUANTIDADE DE PARCELAS: <input type="number" name="quantidadeParcelas" min="0" max="10"><br></label>
+			<br>
+			<input type="submit" value="Enviar">
+		</fieldset>
+	</form>
 </body>
 </html>
