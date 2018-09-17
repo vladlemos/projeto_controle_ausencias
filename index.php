@@ -8,8 +8,20 @@
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script>
 		$( function() {
-			$( "#datePickerDataInicio" ).datepicker({ dateFormat: 'dd/mm/yy', minDate: 0, maxDate: "+6M" }).val();
-			$( "#datePickerDataRetorno" ).datepicker({ dateFormat: 'dd/mm/yy', minDate: 0, maxDate: "+7M" }).val();
+			$( "#datePickerDataInicio" ).datepicker({ 
+				dateFormat: 'dd/mm/yy',
+				altField: "#alternate",
+				altFormat: "yy-mm-dd",
+				minDate: 0,
+				maxDate: "+6M"
+			});
+			$( "#datePickerDataRetorno" ).datepicker({ 
+				dateFormat: 'dd/mm/yy',
+				altField: "#alternate2",
+				altFormat: "yy-mm-dd",
+				minDate: 0,
+				maxDate: "+7M"
+			});
 		} );
 	</script>
 </head>
@@ -35,7 +47,7 @@
 
 		// echo "<hr/>";
 	?>
-	<form action="" method="get">
+	<form action="registraSolicitacaoFerias.php" method="post">
 		<fieldset><legend>DADOS EMPREGADO</legend>
 			<label>MATRICULA: <input type="text" name="matricula" value="<?= $usuario->getMatricula(); ?>" size="5" readonly>
 			- <input type="text" name="dv" value="<?= $usuario->getDv(); ?>" size="1" readonly></label>
@@ -45,17 +57,19 @@
 		<fieldset><legend>SOLICITAR AUSÊNCIA</legend>
 			<label>PERIODO AQUISITIVO: <input type="text" name="periodoAquisitivo" value="<?= date("d/m/Y", strtotime($ferias->getPeriodoAquisitivo())); ?>" size="10" readonly></label>
 			<label>DIAS DISPONÍVEIS: <input type="text" name="saldoDisponivel" value="<?= $ferias->getSaldo(); ?>" size="2" readonly><br></label>
-			<label>DATA INICIO: <input type="text" id="datePickerDataInicio" name="dataInicio"></label>
-			<label>DATA RETORNO: <input type="text" id="datePickerDataRetorno" name="dataRetorno"><br></label>
+			<label>DATA INICIO: <input type="text" id="datePickerDataInicio" required><input type="hidden" id="alternate" name="dataInicio"></label>
+			<label>DATA RETORNO: <input type="text" id="datePickerDataRetorno" required><input type="hidden" id="alternate2" name="dataRetorno"><br></label>
 			<label>ABONO PECUNIÁRIO: 
-				<select name="abonoPecuniario">
+				<select name="abonoPecuniario" required>
 					<option value="0">NÃO</option>
 					<option value="1">SIM</option>
 				</select>
 			</label>
-			<label>QUANTIDADE DIAS ABONO: <input type="number" name="quantidadeDiasAbono" min="0"><br></label>
-			<label>QUANTIDADE DE PARCELAS: <input type="number" name="quantidadeParcelas" min="0" max="10"><br></label>
-			<br>
+			<label>QUANTIDADE DIAS ABONO: <input type="number" name="quantidadeDiasAbono" min="0" required><br></label>
+			<label>QUANTIDADE DE PARCELAS: <input type="number" name="quantidadeParcelas" min="0" max="10" required><br></label>
+			<label>OBSERVAÇÃO:<br>
+				<textarea placeholder="Coloque sua observação aqui..." name="observacao" rowa="4" cols="105"></textarea><br>
+			</label>
 			<input type="submit" value="Enviar">
 		</fieldset>
 	</form>
